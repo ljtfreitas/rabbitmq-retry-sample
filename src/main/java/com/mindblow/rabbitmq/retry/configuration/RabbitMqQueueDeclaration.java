@@ -25,7 +25,8 @@ public class RabbitMqQueueDeclaration {
 	public Exchange exchange() {
 		return ExchangeBuilder.directExchange("rabbitmq-retry-exchange")
 				.autoDelete()
-					.build();
+					.delayed()
+						.build();
 	}
 
 	@Bean
@@ -57,7 +58,7 @@ public class RabbitMqQueueDeclaration {
 		return BindingBuilder
 				.bind(deadQueue())
 					.to(deadExchange())
-						.with("retryable")
+						.with("retryable-to-delay")
 							.noargs();
 	}
 }
